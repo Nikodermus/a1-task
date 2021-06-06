@@ -14,24 +14,33 @@ const StyledImg = styled.img`
   width: 100px;
 `;
 
-const CarListItem: React.FC<CarListItemProps> = () => {
+const CarListItem: React.FC<CarListItemProps> = ({ car }) => {
+  const {
+    color,
+    fuelType,
+    manufacturerName,
+    mileage,
+    modelName,
+    pictureUrl,
+    stockNumber,
+  } = car;
+  const fullName = `${manufacturerName} ${modelName}`;
+  const details = `Stock #${stockNumber} - ${
+    mileage.number
+  } ${mileage.unit.toLocaleUpperCase()} - ${fuelType} - ${color}`;
+
   return (
     <Paper variant="outlined">
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item>
-            <StyledImg
-              alt="Car name"
-              src="https://auto1-js-task-api--mufasa71.repl.co/images/car.svg"
-            />
+            <StyledImg alt={fullName} src={pictureUrl} />
           </Grid>
 
           <Grid item>
-            <Typography variant="h5">Mercedes-Benz Vito Tourer</Typography>
-            <Typography gutterBottom>
-              Stock # 29839 - 107.613 KM - Petrol - Red
-            </Typography>
-            <Link to="/" color="primary">
+            <Typography variant="h5">{fullName}</Typography>
+            <Typography gutterBottom>{details}</Typography>
+            <Link to={`/car/${stockNumber}`} color="primary">
               View details
             </Link>
           </Grid>

@@ -1,14 +1,21 @@
 import {
   Box,
+  capitalize,
   Card,
   CardContent,
   InputLabel,
   MenuItem,
   Select,
 } from '@material-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
+import type Manufacturer from '../types/Manufacturer.d';
+
+import { createURLParams, parseURLParams } from '../utils/string';
+import { getJSON } from '../utils/fetch';
 import Button from './Button';
 
 export interface FilterBoxProps {
@@ -19,9 +26,38 @@ const StyledButton = styled(Button)`
   align-self: flex-end;
 `;
 
+interface ColorResponse {
+  colors: string[];
+}
+
+interface ManufacturersResponse {
+  manufacturers: Manufacturer[];
+}
+
 const FilterBox: React.FC<FilterBoxProps> = () => {
-  const [color, setColor] = useState('');
-  const [manufacturer, setManufacturer] = useState('');
+  const history = useHistory();
+
+  const { data: dataColors } = useQuery<ColorResponse>('colors', () =>
+    getJSON<ColorResponse>('colors')
+  );
+
+  const { data: dataManufacturers } = useQuery<ManufacturersResponse>(
+    'manufacturers',
+    () => getJSON<ManufacturersResponse>('manufacturers')
+  );
+
+  const [color, setColor] = useState(
+    () => parseURLParams(window.location.search).color || ''
+  );
+  const [manufacturer, setManufacturer] = useState(
+    () => parseURLParams(window.location.search).manufacturer || ''
+  );
+
+  useEffect(() => {
+    history.push({
+      search: createURLParams('', { color, manufacturer }),
+    });
+  }, [color, manufacturer, history]);
 
   return (
     <Card variant="outlined">
@@ -43,9 +79,11 @@ const FilterBox: React.FC<FilterBoxProps> = () => {
               value={color}
             >
               <MenuItem value="">All car colors</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {dataColors?.colors.map((colorOpt) => (
+                <MenuItem value={colorOpt} key={colorOpt}>
+                  {capitalize(colorOpt)}
+                </MenuItem>
+              ))}
             </Select>
           </Box>
 
@@ -59,9 +97,11 @@ const FilterBox: React.FC<FilterBoxProps> = () => {
               value={manufacturer}
             >
               <MenuItem value="">All car manufacturers</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {dataManufacturers?.manufacturers.map(({ name }) => (
+                <MenuItem value={name} key={name}>
+                  {name}
+                </MenuItem>
+              ))}
             </Select>
           </Box>
 
