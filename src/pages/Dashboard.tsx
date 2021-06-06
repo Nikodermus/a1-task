@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
       </Grid>
 
       <Grid item xs={9}>
-        <Results cars={[]} />
+        <Results />
       </Grid>
     </Grid>
   );
