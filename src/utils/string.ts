@@ -2,7 +2,7 @@ export const capitalize = (str: string): string =>
   str
     .split(' ')
     .map((word: string) =>
-      word.replace(/^\W/, (letter: string) => letter.toLocaleUpperCase())
+      word.replace(/^\w/, (letter: string) => letter.toLocaleUpperCase())
     )
     .join(' ');
 

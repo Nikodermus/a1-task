@@ -8,15 +8,15 @@ import {
   Select,
 } from '@material-ui/core';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
 import type Manufacturer from '../types/Manufacturer.d';
 
-import { createURLParams, parseURLParams } from '../utils/string';
+import { getCurrentURLParams } from '../utils/url';
 import { getJSON } from '../utils/fetch';
 import Button from './Button';
+import usePushParams from '../hooks/usePushParams';
 
 export interface FilterBoxProps {
   onChange?: () => void;
@@ -35,7 +35,7 @@ interface ManufacturersResponse {
 }
 
 const FilterBox: React.FC<FilterBoxProps> = () => {
-  const history = useHistory();
+  const push = usePushParams();
 
   const { data: dataColors } = useQuery<ColorResponse>('colors', () =>
     getJSON<ColorResponse>('colors')
@@ -46,18 +46,14 @@ const FilterBox: React.FC<FilterBoxProps> = () => {
     () => getJSON<ManufacturersResponse>('manufacturers')
   );
 
-  const [color, setColor] = useState(
-    () => parseURLParams(window.location.search).color || ''
-  );
+  const [color, setColor] = useState(() => getCurrentURLParams().color || '');
   const [manufacturer, setManufacturer] = useState(
-    () => parseURLParams(window.location.search).manufacturer || ''
+    () => getCurrentURLParams().manufacturer || ''
   );
 
   useEffect(() => {
-    history.push({
-      search: createURLParams('', { color, manufacturer }),
-    });
-  }, [color, manufacturer, history]);
+    push({ color, manufacturer });
+  }, [color, manufacturer, push]);
 
   return (
     <Card variant="outlined">

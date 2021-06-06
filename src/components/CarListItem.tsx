@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import type Car from '../types/Car.d';
 
+import { capitalize } from '../utils/string';
+import { formatNumber } from '../utils/url';
 import Link from './Link';
 
 export interface CarListItemProps {
@@ -25,9 +27,9 @@ const CarListItem: React.FC<CarListItemProps> = ({ car }) => {
     stockNumber,
   } = car;
   const fullName = `${manufacturerName} ${modelName}`;
-  const details = `Stock #${stockNumber} - ${
+  const details = `Stock #${stockNumber} - ${formatNumber(
     mileage.number
-  } ${mileage.unit.toLocaleUpperCase()} - ${fuelType} - ${color}`;
+  )} ${mileage.unit.toLocaleUpperCase()} - ${fuelType} - ${capitalize(color)}`;
 
   return (
     <Paper variant="outlined">
