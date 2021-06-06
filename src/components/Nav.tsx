@@ -9,14 +9,16 @@ const StyledImg = styled.img`
 `;
 
 const StyledAppBar = styled(AppBar)`
+  background: white;
   height: 80px;
+  margin-bottom: 24px;
   padding-left: 24px;
   padding-right: 24px;
 `;
 
 const Nav: React.FC = () => {
   return (
-    <StyledAppBar color="transparent" position="static" variant="outlined">
+    <StyledAppBar position="static" variant="outlined">
       <Grid container spacing={3} alignItems="center" justify="space-between">
         <Grid item>
           <h1>
