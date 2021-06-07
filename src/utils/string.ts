@@ -1,5 +1,4 @@
 import type Car from '../types/Car.d';
-import { formatNumber } from './url';
 
 export const capitalize = (str: string): string =>
   str
@@ -9,30 +8,8 @@ export const capitalize = (str: string): string =>
     )
     .join(' ');
 
-export const createURLParams = (
-  base: string,
-  params: Record<string, string | number>
-): string => {
-  const url = new URLSearchParams();
-
-  Object.entries(params)
-    .filter(([, value]) => Boolean(value))
-    .forEach(([key, value]) => url.append(key, String(value)));
-
-  return `${base}?${url}`;
-};
-
-export const parseURLParams = (search: string): Record<string, string> => {
-  const url = new URLSearchParams(search);
-  const result: Record<string, string> = {};
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [key, value] of url.entries()) {
-    result[key as string] = value;
-  }
-
-  return result;
-};
+export const formatNumber = (number: number): string =>
+  new Intl.NumberFormat('de-DE').format(number);
 
 export const getCarDetails = (
   car: Car

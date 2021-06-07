@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 
 import type Car from '../types/Car.d';
 
-import { createURLParams } from '../utils/string';
+import { createURLParams } from '../utils/url';
 import { getJSON } from '../utils/fetch';
 import CarListItem from './CarListItem';
 import CarSkeleton from './CarSkeleton';
