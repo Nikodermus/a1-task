@@ -7,7 +7,7 @@ import {
   MenuItem,
   Select,
 } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
@@ -50,10 +50,6 @@ const FilterBox: React.FC<FilterBoxProps> = () => {
   const [manufacturer, setManufacturer] = useState(
     () => getCurrentURLParams().manufacturer || ''
   );
-
-  useEffect(() => {
-    push({ color, manufacturer });
-  }, [color, manufacturer, push]);
 
   return (
     <Card variant="outlined">
@@ -101,7 +97,12 @@ const FilterBox: React.FC<FilterBoxProps> = () => {
             </Select>
           </Box>
 
-          <StyledButton color="primary" variant="contained" disableElevation>
+          <StyledButton
+            color="primary"
+            variant="contained"
+            disableElevation
+            onClick={() => push({ color, manufacturer })}
+          >
             Filter
           </StyledButton>
         </Box>
