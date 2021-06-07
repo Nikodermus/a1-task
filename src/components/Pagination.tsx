@@ -49,6 +49,7 @@ const Pagination: React.FC<PaginationProps> = ({ count }) => {
     >
       <ButtonLikeLink
         disabled={inFirst}
+        aria-disabled={inFirst}
         onClick={() => setPage(1)}
         type="button"
       >
@@ -56,6 +57,7 @@ const Pagination: React.FC<PaginationProps> = ({ count }) => {
       </ButtonLikeLink>
       <ButtonLikeLink
         disabled={inFirst}
+        aria-disabled={inFirst}
         onClick={() => setPage((current) => current - 1)}
         type="button"
       >
@@ -66,6 +68,7 @@ const Pagination: React.FC<PaginationProps> = ({ count }) => {
 
       <ButtonLikeLink
         disabled={inLast}
+        aria-disabled={inLast}
         onClick={() => setPage((current) => current + 1)}
         type="button"
       >
@@ -73,6 +76,7 @@ const Pagination: React.FC<PaginationProps> = ({ count }) => {
       </ButtonLikeLink>
       <ButtonLikeLink
         disabled={inLast}
+        aria-disabled={inLast}
         onClick={() => setPage(count)}
         type="button"
       >

@@ -44,7 +44,12 @@
   },
   "overrides": [
     {
-      "files": ["**.test.tsx", "src/setupTests.ts", "**.test.ts"],
+      "files": [
+        "**.test.tsx",
+        "src/setupTests.ts",
+        "**.test.ts",
+        "src/test-render.tsx"
+      ],
       "env": {
         "jest": true
       },
